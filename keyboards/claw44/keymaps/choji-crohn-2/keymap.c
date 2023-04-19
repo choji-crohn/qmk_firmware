@@ -24,6 +24,7 @@ enum custom_keycodes {
     TGPID,
     HDCPY,
     DERWE,
+    WINLD,
 };
 
 enum layer_number {
@@ -62,8 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_LOWER] = LAYOUT(
     //,---------+---------+---------+---------+---------+---------.   ,---------+---------+---------+---------+---------+---------.
-//      RGB_TOG , RGB_HUI , RGB_SAI , RGB_VAD , RGB_MOD , HDCPY   ,     WINID   , TGPID   , XXXXXXX , KC_PSCR , KC_INS  , XXXXXXX ,
-        WINID   , TGPID   , XXXXXXX , KC_F8   , KC_CY   , HDCPY   ,     XXXXXXX , XXXXXXX , XXXXXXX , KC_PSCR , KC_INS  , XXXXXXX ,
+        WINID   ,  TGPID  , XXXXXXX , KC_F8   , KC_CY   , HDCPY   ,     XXXXXXX , XXXXXXX , XXXXXXX , KC_PSCR , KC_INS  , XXXXXXX ,
     //|---------+---------+---------+---------+---------+---------|   |---------+---------+---------+---------+---------+---------|
         KC_S_CL , KC_EXLM , KC_AT   , KC_HASH , KC_DLR  , KC_PERC ,     KC_LEFT , KC_DOWN , KC_UP   , KC_RIGHT, KC_LCBR , KC_RCBR ,
     //|---------+---------+---------+---------+---------+---------|   |---------+---------+---------+---------+---------+---------|
@@ -72,14 +72,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                             KC_R_ENT, KC_C_DEL, _______ , _______ ,     _______ , KC_ADJ  , _______ , _______
     //                    `---------+---------+---------+---------'   `---------+---------+---------+---------'
     ) ,   
-
+    
     [_RAISE] = LAYOUT(
     //,---------+---------+---------+---------+---------+---------.   ,---------+---------+---------+---------+---------+---------.
         KC_F1   , KC_F2   , KC_F3   , KC_F4   , KC_F5   , KC_F6   ,     KC_GRV  , KC_EQL  , KC_PPLS , KC_PAST , KC_PSLS , KC_MINS ,
     //|---------+---------+---------+---------+---------+---------|   |---------+---------+---------+---------+---------+---------|
         _______ , KC_1    , KC_2    , KC_3    , KC_4    , KC_5    ,     KC_6    , KC_7    , KC_8    , KC_9    , KC_0    , KC_BSLS ,
     //|---------+---------+---------+---------+---------+---------|   |---------+---------+---------+---------+---------+---------|
-        KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12  ,     KC_LBRC , KC_RBRC , _______ , _______ , _______ , DERWE   ,
+        KC_F7   , KC_F8   , KC_F9   , KC_F10  , KC_F11  , KC_F12  ,     KC_LBRC , KC_RBRC , _______ , _______ , WINLD   , DERWE   ,
     //`---------+---------+---------+---------+---------+---------/   |---------+---------+---------+---------+---------+---------'
                             _______ , _______ , KC_ADJ  , _______ ,     _______ , _______ , _______ , _______
     //                    `---------+---------+---------+---------'   `---------+---------+---------+---------'
@@ -87,13 +87,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ADJUST] = LAYOUT(
     //,---------+---------+---------+---------+---------+---------.   ,---------+---------+---------+---------+---------+---------.
-        KC_ESC  , KC_WH_U , KC_BTN2 , KC_MS_U , KC_BTN1 , XXXXXXX ,     XXXXXXX , KC_7    , KC_8    , KC_9    , XXXXXXX , XXXXXXX ,
+        _______ , KC_WH_U , KC_BTN2 , KC_MS_U , KC_BTN1 , XXXXXXX ,     XXXXXXX , KC_7    , KC_8    , KC_9    , RGB_TOG , RGB_HUI ,
     //|---------+---------+---------+---------+---------+---------|   |---------+---------+---------+---------+---------+---------|
-        KC_TAB  , KC_WH_D , KC_MS_L , KC_MS_D , KC_MS_R , XXXXXXX ,     XXXXXXX , KC_4    , KC_5    , KC_6    , XXXXXXX , XXXXXXX ,
+        _______ , KC_WH_D , KC_MS_L , KC_MS_D , KC_MS_R , XXXXXXX ,     XXXXXXX , KC_4    , KC_5    , KC_6    , RGB_SAI , RGB_VAI ,
     //|---------+---------+---------+---------+---------+---------|   |---------+---------+---------+---------+---------+---------|
-        KC_G_L  , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,     KC_0    , KC_1    , KC_2    , KC_3    , XXXXXXX , KC_RIGHT,
+        _______ , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,     KC_0    , KC_1    , KC_2    , KC_3    , RGB_MOD , _______ ,
     //`---------+---------+---------+---------+---------+---------/   |---------+---------+---------+---------+---------+---------'
-                            KC_A_DWN, KC_TRNS , KC_TRNS , KC_TRNS ,     KC_TRNS , KC_TRNS , KC_TRNS , KC_A_UP
+                            _______ , _______ , _______ , _______ ,     _______ , _______ , _______ , _______
     //                    `---------+---------+---------+---------'   `---------+---------+---------+---------'
     ),
 };
@@ -303,7 +303,7 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
     }
 
     // update keylog
-    snprintf(keylog_str, sizeof(keylog_str), "%dx%d  k%2d:%c", record->event.key.row, record->event.key.col, keycode, name);
+    snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d:%c", record->event.key.row, record->event.key.col, keycode, name);
 
     // update keylogs
     if (keylogs_str_idx == sizeof(keylogs_str) - 1) {
@@ -339,7 +339,7 @@ static void print_status_narrow(void) {
     /* KEYBOARD PET RENDER START */
 
     render_luna(0, 10);
-    
+
     /* wpm counter */
     uint8_t n = get_current_wpm();
     char    wpm_str[4];
@@ -388,7 +388,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case WINID:
             if (record->event.pressed) {
                 // when keycode WINID is pressed
-                SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_DELETE) SS_UP(X_LALT) SS_UP(X_LCTRL) SS_DELAY(1500) "hornet22a" SS_DELAY(500) SS_TAP(X_ENTER) );
+                SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_DELETE) SS_UP(X_LALT) SS_UP(X_LCTRL) SS_DELAY(1500) "hornet23" SS_DELAY(500) SS_TAP(X_ENTER) );
             } else {
                 // when keycode WINID is released
             }
@@ -411,13 +411,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // when keycode HDCPY is released
             }
             break;
-            
+
         case DERWE:
             if (record->event.pressed) {
                 // when keycode DERWE is pressed
                 SEND_STRING( SS_DOWN(X_LALT) SS_TAP(X_TAB) SS_UP(X_LALT) SS_DELAY(300) SS_TAP(X_RIGHT) SS_DELAY(100) SS_DOWN(X_LALT) SS_TAP(X_TAB) SS_UP(X_LALT) );
             } else {
                 // when keycode DERWE is released
+            }
+            break;
+
+        case WINLD:
+            if (record->event.pressed) {
+                // when keycode WINLD is pressed
+                SEND_STRING( SS_DOWN(X_LGUI) SS_TAP(X_LEFT) SS_TAP(X_DOWN) SS_UP(X_LGUI) );
+            } else {
+                // when keycode WINLD is released
             }
             break;
 

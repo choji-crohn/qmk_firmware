@@ -21,33 +21,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MASTER_LEFT
 #define OLED_FONT_H "keyboards/claw44/lib/glcdfont.c"
 
-#define OLED_TIMEOUT 60000
-#define OLED_BRIGHTNESS 120
-#define SPLIT_TRANSPORT_MIRROR    //OLED DATA SYNC OPTION
-
 /* WS2812B RGB LED */
 #define RGB_DI_PIN D3
+#define RGBLIGHT_ANIMATIONS
 #define RGBLED_NUM 12
-#define RGBLED_SPLIT { 6, 6 }    // Number of LEDs
-
-//#define RGBLIGHT_ANIMATIONS  /* https://beta.docs.qmk.fm/using-qmk/hardware-features/lighting/feature_rgblight */
-//#define RGBLIGHT_EFFECT_ALTERNATING
-//#define RGBLIGHT_EFFECT_BREATHING
-//#define RGBLIGHT_EFFECT_BREATHE_MAX 120
-//#define RGBLIGHT_EFFECT_CHRISTMAS
-//#define RGBLIGHT_EFFECT_KNIGHT
-//#define RGBLIGHT_EFFECT_RAINBOW_MOOD
-#define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-//#define RGBLIGHT_EFFECT_RGB_TEST
-//#define RGBLIGHT_EFFECT_SNAKE
-//#define RGBLIGHT_EFFECT_STATIC_GRADIENT
-#define RGBLIGHT_EFFECT_TWINKLE
-
-#define RGBLIGHT_HUE_STEP 8
-#define RGBLIGHT_SAT_STEP 8
-#define RGBLIGHT_SLEEP
 #define RGBLIGHT_SPLIT
+#define RGBLED_SPLIT { 6, 6 }    // Number of LEDs
 
 // The LEDs on the slave half go in reverse order
 #define RGBLIGHT_LED_MAP { 0,  1,  2,  3,  4,  5, \
                           11, 10,  9,  8,  7,  6 }
+
+/* OLED DATA SYNC OPTION START */
+#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_MODS_ENABLE
+#define SPLIT_LED_STATE_ENABLE
+/* OLED DATA SYNC OPTION END */
